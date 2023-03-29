@@ -11,7 +11,7 @@ public final class UserUtil extends mySQL.dao.sqlConnection {
     static User user  = new User();
     public static boolean InsertByUser(User user){
         //将一个user对象插入表
-        String sql = "INSERT into user VALUES ('"+user.getId()+"','"+user.getUsername()+"','"+user.getPassword()+"','"+user.getPower()+"')";
+        @SuppressWarnings("SqlResolve") String sql = "INSERT into user VALUES ('"+user.getId()+"','"+user.getUsername()+"','"+user.getPassword()+"','"+user.getPower()+"')";
         boolean result;
         try
         {
