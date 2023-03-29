@@ -65,7 +65,7 @@ public final class AuditUtil extends sqlConnection {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
-            if (conn!=null){
+            if (conn !=null){
                 try {
                     conn.close();
                 } catch (SQLException e) {

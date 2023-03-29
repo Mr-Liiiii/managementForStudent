@@ -22,8 +22,8 @@ public class Main {
 //        temp.setPassword("asasasasas");
 //        temp.setPower(1);
 //        UserUtil.InsertByUser(temp);
-          ArrayList<Integer> temp = new ArrayList<Integer>();
-          //temp = StudentUtil.getStudentIDByAgencyID(2);
+//          ArrayList<Integer> temp = new ArrayList<Integer>();
+//        temp = StudentUtil.getStudentIDByAgencyID(2);
 //        for (int i = 0; i < temp.size(); i++) {
 //            System.out.println(temp.get(i));
 //        }
@@ -32,7 +32,7 @@ public class Main {
 //            System.out.println(temp[i]);
 //
 //        }
-        //test();
+        test();
     }
 //    public void init() {
 //        Major m1 = new Major("计算机科学与技术", 1);
@@ -69,19 +69,18 @@ public class Main {
                     agencyService.getAgencyById(user).frame();
                 }
                 else if(tmp.getPower() == 2) {
-                    Audit a = new Audit(); // 返回Audit的接口
-                    a.frame();
+                     // 返回Audit的接口
+                    auditService.getAuditByUser(tmp).frame();
                 }
                 else {
-                    Reply r = new Reply(); // 返回Reply的接口
+                    Reply r = replyService.getReplyByUser(tmp); // 返回Reply的接口
                     r.frame();
                 }
-            }
-            else if(inPut == 2) {
+            }else if(inPut == 2) {
                 while(true){                                                            //特判函数
 
                         User temp = register();
-                        if (userService.checkRegister(temp)){
+                        if (!userService.checkRegister(temp)){
                             userService.InsertByUser(temp);                            // 以 User 的形式直接塞进数据库
                             userService.InsertIdByPower(temp.getId(),temp.getPower());// 放入对应职位的表
                             break;
@@ -90,9 +89,12 @@ public class Main {
                         }
                 }
                 // 把对象传给后面
-            }
-            else {
+            } else if (inPut == 3) {
                 break;
+
+            } else {
+                System.out.println("error !! input again!");
+//                break;
             }
         }
     }
@@ -139,22 +141,28 @@ public class Main {
                 System.out.println("Please re-enter, because there are some differences between the two passwords !");
             }
         }
-        System.out.println("Please select your status :");
-        System.out.println("1. Agency"); // 代理专员
-        System.out.println("2. Audit"); // 审查专员
-        System.out.println("3. Reply"); // 批复专员
-        switch (sc.nextInt()) {
-            case 1:
-                u = new Agency(cnt ++ , un, pwd, 1);
-                return u;
-            case 2:
-                u = new Audit(cnt ++ , un, pwd, 2);
-                return u;
-            case 3:
-                u = new Reply(cnt ++ , un, pwd, 3);
-                return u;
+        while (true) {
+            System.out.println("Please select your status :");
+            System.out.println("1. Agency"); // 代理专员
+            System.out.println("2. Audit"); // 审查专员
+            System.out.println("3. Reply"); // 批复专员
+            System.out.println("请勿输入其他非法内容！");
+            switch (sc.nextInt()) {
+                case 1:
+                    u = new Agency(cnt ++ , un, pwd, 1);
+                    return u;
+                case 2:
+                    u = new Audit(cnt ++ , un, pwd, 2);
+                    return u;
+                case 3:
+                    u = new Reply(cnt ++ , un, pwd, 3);
+                    return u;
+                default:
+                    System.out.println("status illegal!!!");
+                    continue;
+            }
         }
-        return null;
+//        return null;
     }
 
 }

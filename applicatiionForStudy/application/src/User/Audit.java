@@ -1,11 +1,13 @@
 package User;
 
+import mySQL.dao.StudentUtil;
+
 import java.util.ArrayList;
 
 public class Audit extends User{
     // getStudent()
     public ArrayList<Student> getStudents() {
-        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Student> students = StudentUtil.getStudentsAll();
         // 从 Stu 表中拿到所有的学生，并以学生集合类的形式返回
         return students;
     }
@@ -18,10 +20,11 @@ public class Audit extends User{
             System.out.println("1. 审批学生资质");
             System.out.println("2. 修改密码");
             System.out.println("else.退出");
-            if(sc.nextInt() == 1) {
+            int inPut = sc.nextInt();
+            if(inPut == 1) {
                 checkStudent();
             }
-            else if(sc.nextInt() == 2) {
+            else if(inPut == 2) {
                 changePassword();
             }
             else break;

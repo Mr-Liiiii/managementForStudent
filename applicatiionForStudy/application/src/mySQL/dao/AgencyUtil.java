@@ -87,15 +87,12 @@ public final class AgencyUtil extends sqlConnection{
             //遍历处理结果
             while (rs.next())
             {
-                int user = rs.getInt("user.user");
-                String username = rs.getString("username");
                 String password = "**********";
-                int power = rs.getInt("power");
-                agency.setUsername(username);
+                agency.setUsername(rs.getString("username"));
                 agency.setPassword(password);
-                agency.setPower(power);
+                agency.setPower(rs.getInt("power"));
                 agency.setStudents(StudentUtil.getStudentIDByAgencyID(AgencyID));
-                agency.setId(user);
+                agency.setId( rs.getInt("user"));
             }
         } catch (SQLException e)
         {

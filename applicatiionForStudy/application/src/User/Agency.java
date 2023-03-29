@@ -36,6 +36,7 @@ public class Agency extends User {
                 //提交
                 // 把submit返回的对象给到下层数据库进行提交
                 StudentUtil.insertStudentByStudent(submit());
+                //把学生插入到学校的表中
                 break;
             case 2:
                 System.out.println("请选择查看方式");

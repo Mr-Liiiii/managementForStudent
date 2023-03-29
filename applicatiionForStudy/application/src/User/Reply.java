@@ -1,8 +1,10 @@
 package User;
 
 import School.School;
+import mySQL.dao.StudentUtil;
 
 import java.util.ArrayList;
+
 
 public class Reply extends User{
     private int studentid;
@@ -10,7 +12,8 @@ public class Reply extends User{
 
     public ArrayList<Student> getStudentsBySchoolID() {
         // 通过当前Reply对象的schoolid返回students集合
-        ArrayList<Student> students = new ArrayList<>();
+        //通过schoolID返回对应Student表的集合
+        ArrayList<Student> students =  StudentUtil.getStudentBySchoolID(schoolid) ;
         return students;
     }
 

@@ -11,7 +11,8 @@ public final class UserUtil extends mySQL.dao.sqlConnection {
     static User user  = new User();
     public static boolean InsertByUser(User user){
         //将一个user对象插入表
-        @SuppressWarnings("SqlResolve") String sql = "INSERT into user VALUES ('"+user.getId()+"','"+user.getUsername()+"','"+user.getPassword()+"','"+user.getPower()+"')";
+        @SuppressWarnings("SqlResolve")
+        String sql = "INSERT into user VALUES ('"+user.getId()+"','"+user.getUsername()+"','"+user.getPassword()+"','"+user.getPower()+"')";
         boolean result;
         try
         {
@@ -24,21 +25,6 @@ public final class UserUtil extends mySQL.dao.sqlConnection {
         } catch (SQLException e)
         {
             throw new RuntimeException(e);
-        } finally {
-            if (conn!=null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (stmt!=null){
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
         return result;
     }
@@ -189,40 +175,18 @@ public final class UserUtil extends mySQL.dao.sqlConnection {
     }
     public static boolean checkRegister(User temp)
     {
-        String sql = "SELECT * FROM user Where username='" + user.getUsername() + "'";
+        String sql = "SELECT * FROM user Where username='" + temp.getUsername() + "'";
+        System.out.println(sql);
         try {
             rs = stmt.executeQuery(sql);
-            if (rs.next()){
-                return true;
-            }else{
-                return false;
-            }
+            boolean ab = rs.next();
+            System.out.println(ab);
+            return ab;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            if (conn!=null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (stmt!=null){
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (rs!=null){
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
         }
-
     }
+
+
 }

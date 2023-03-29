@@ -1,15 +1,11 @@
 package mySQL.dao;
 
 import User.Student;
-import User.User;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 
-import static mySQL.dao.SchoolHaveUtil.*;
+import static mySQL.dao.SchoolHaveUtil.getHaveByID;
 
 public final class StudentUtil extends sqlConnection {
     private StudentUtil(){}
@@ -81,8 +77,8 @@ public final class StudentUtil extends sqlConnection {
         return student;
     }
     public static ArrayList<Student> getStudentsAll(){
-        //查询student表
-        ArrayList<Student> list = new ArrayList<Student>();
+        //把student表中所有的stu对象以集合的方式返回
+        ArrayList<Student> stu = new ArrayList<Student>();
         String sql = "select * from student left join schoolhave on student.studentId = schoolhave.schoolHaveID;";
         Student student  = new Student();
         try {
@@ -115,7 +111,7 @@ public final class StudentUtil extends sqlConnection {
                 student.setMajorID(majorID);
                 int[] temp = getHaveByID(schoolID);
                 student.setHave(temp);
-                list.add(student);
+                stu.add(student);
 
             }
 
@@ -144,7 +140,7 @@ public final class StudentUtil extends sqlConnection {
                     throw new RuntimeException(e);
                 }
             }
-        return list;
+        return stu;
         }
     }
     public static ArrayList<Integer> getStudentIDByAgencyID(int AgencyID)
@@ -250,6 +246,71 @@ public final class StudentUtil extends sqlConnection {
         }
         return tempList;
     }
+    public static ArrayList<Student> getStudentBySchoolID(int SchoolID)
+    {
+        //传入SchoolID返回对应SchoolID的student对象集合
+        ArrayList<Student> stus = new ArrayList<Student>();
+        String sql =  "SELECT * FROM student WHERE schoolID = "+SchoolID+";";
+        try {
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int studentID = rs.getInt("studentID");
+                String name = rs.getString("name");
+                Boolean pass;
+                if(rs.getInt("pass")==0){
+                    pass = false;
+                }else{
+                    pass = true;
+                }
+                String school = rs.getString("school");
+                String email = rs.getString("email");
+                String info = rs.getString("info");
+                String score = rs.getString("score");
+                int schoolID = rs.getInt("schoolID");
+                int majorID = rs.getInt("MajorID");
+                int res = rs.getInt("res");
+                int AgencyId = rs.getInt("AgencyID");
+                student.setSchoolID(studentID);
+                student.setName(name);
+                student.setPass(pass);
+                student.setSchool(school);
+                student.setEmail(email);
+                student.setInfo(info);
+                student.setScore(score);
+                student.setSchoolID(schoolID);
+                student.setMajorID(majorID);
+                int[] temp = getHaveByID(schoolID);
+                student.setHave(temp);
+                stus.add(student);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            if (conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (stmt!=null){
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return stus;
+    }
+
     public static boolean insertStudentByStudent(Student stu){
         //传入student对象将值插入表
         int pass;
