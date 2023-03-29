@@ -21,6 +21,8 @@ public  final  class userService {
         //进行特判判断账号密码是否正确正确返回对象
         UserUtil.checkLogOn(temp);
     }
-
+    public static boolean checkRegister(User temp){
+        return UserUtil.checkRegister(temp);
+    }
 
 }

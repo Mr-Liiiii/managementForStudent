@@ -58,7 +58,8 @@ public class Main {
     public static void test() {
         while(true) {
             mainMenu();
-            if(sc.nextInt() == 1) {
+            int inPut =  sc.nextInt();
+            if(inPut == 1) {
                 User tmp = logOn();
                 userService.checkLogOn(tmp);//特判函数
                 int user = tmp.getId();
@@ -76,11 +77,19 @@ public class Main {
                     r.frame();
                 }
             }
-            else if(sc.nextInt() == 2) {
-                register();
+            else if(inPut == 2) {
+                while(true){                                                            //特判函数
+
+                        User temp = register();
+                        if (userService.checkRegister(temp)){
+                            userService.InsertByUser(temp);                            // 以 User 的形式直接塞进数据库
+                            userService.InsertIdByPower(temp.getId(),temp.getPower());// 放入对应职位的表
+                            break;
+                        }else{
+                            System.out.println("😅Duplicate username ! please input again!!");
+                        }
+                }
                 // 把对象传给后面
-                // 以 User 的形式直接塞进数据库
-                // 放入 User 和 对应职位 的表
             }
             else {
                 break;
@@ -113,7 +122,7 @@ public class Main {
         return u;
     }
 
-    public static User register() {
+    public static User  register() {
         System.out.println("Please Enter Your Username :");
         String un = sc.next();
         User u;

@@ -187,4 +187,42 @@ public final class UserUtil extends mySQL.dao.sqlConnection {
 
 
     }
+    public static boolean checkRegister(User temp)
+    {
+        String sql = "SELECT * FROM user Where username='" + user.getUsername() + "'";
+        try {
+            rs = stmt.executeQuery(sql);
+            if (rs.next()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            if (conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (stmt!=null){
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+
+    }
 }

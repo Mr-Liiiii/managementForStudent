@@ -47,12 +47,6 @@ public final class AuditUtil extends sqlConnection {
             }
         }
     }
-    public static Audit getAuditByUser(User user){
-        //将对应student表全部学生信息装入集合返回对象
-        audit.
 
-
-        return
-    }
 
 }
