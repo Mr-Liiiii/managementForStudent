@@ -20,6 +20,12 @@ public class Agency extends User {
     public void setStudents(ArrayList<Integer> students) {
         this.students = students;
     }
+
+    @Override
+    public void changePassword() {
+        super.changePassword();
+    }
+
     @Override
     public void frame() {
         System.out.println("请选择：");
@@ -31,6 +37,7 @@ public class Agency extends User {
         switch (sc.nextInt()) {
             case 0:
                 changePassword();
+                break;
                 // 修改密码
             case 1:
                 //提交

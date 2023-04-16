@@ -156,28 +156,6 @@ public final class StudentUtil extends sqlConnection {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            if (conn!=null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (stmt!=null){
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (rs!=null){
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
         return tempList;
     }

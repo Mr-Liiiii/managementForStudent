@@ -1,5 +1,7 @@
 package User;
 
+import mySQL.dao.UserUtil;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,17 +71,35 @@ public class User implements Func {
 
     @Override
     public void changePassword() {
-        Agency a = new Agency(this.getId(), this.getUsername(), this.getPassword(), this.getPower());
-        System.out.println("请输入原密码：");
-        String n = sc.next();
-        System.out.println("请输入新密码");
-        a.setPassword(sc.next());
-        // 调用接口(新对象, 旧密码)
-        // 如果匹配上
+        User a = new User(this.getId(), this.getUsername(), this.getPassword(), this.getPower());
+        while (true) {
+            System.out.println("请输入原密码：");
+            String oldPassword = sc.next();
+            System.out.println("请输入新密码");
+            a.setPassword(sc.next());
+            // 调用接口(新对象, 旧密码)
+            //获取旧密码
+
+            if (UserUtil.getUserPasswordById(this.getId()).equals(oldPassword))
+            {
+                if (UserUtil.UpdatePasswordByUser(a.getPassword(),a.getId())) {
+                    System.out.println("密码修改成功！");
+                    break;
+                }else {
+                    System.out.println("密码修改失败！");
+                }
+                //覆盖密码
+
+            }else {
+                System.out.println("输入的密码错误。。请重新输入！");
+            }
+
+        }
+        //如果匹配上
 //        if(匹配上) {
-//            this.setPassword(a.getPassword());
-//        }
-    }
+//        this.setPassword(a.getPassword());
+    //}
+}
 
     @Override
     public void frame() {

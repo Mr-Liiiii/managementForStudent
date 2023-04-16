@@ -61,7 +61,7 @@ public class Main {
             int inPut =  sc.nextInt();
             if(inPut == 1) {
                 User tmp = logOn();
-                userService.checkLogOn(tmp);//特判函数
+                tmp =  userService.checkLogOn(tmp);//特判函数
                 int user = tmp.getId();
                 // 调用接口传入tmp 拿对象
                 if(tmp.getPower() == 1) {
@@ -78,9 +78,9 @@ public class Main {
                 }
             }else if(inPut == 2) {
                 while(true){                                                            //特判函数
-
                         User temp = register();
-                        if (!userService.checkRegister(temp)){
+                        if (!userService.checkRegister(temp))
+                        {
                             userService.InsertByUser(temp);                            // 以 User 的形式直接塞进数据库
                             userService.InsertIdByPower(temp.getId(),temp.getPower());// 放入对应职位的表
                             break;
@@ -91,7 +91,6 @@ public class Main {
                 // 把对象传给后面
             } else if (inPut == 3) {
                 break;
-
             } else {
                 System.out.println("error !! input again!");
 //                break;
@@ -139,6 +138,7 @@ public class Main {
             }
             else {
                 System.out.println("Please re-enter, because there are some differences between the two passwords !");
+
             }
         }
         while (true) {
